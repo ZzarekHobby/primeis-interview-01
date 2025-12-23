@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,7 +16,10 @@ namespace CSharp
         /// <returns></returns>
         public static string Reverse1(string input)
         {
-            return null;
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (char c in input.Reverse())
+                stringBuilder.Append(c);
+            return stringBuilder.ToString();
         }
 
         /// <summary>
@@ -25,9 +29,9 @@ namespace CSharp
         /// <returns></returns>
         public static string Reverse2(string input)
         {
-            return null;
+            var result = input.ToCharArray().Reverse().ToArray();
+            return new string(result);
         }
-
 
         /// <summary>
         /// Implement a string truncation function that safely truncates the input without throwning an exception. Return null if input is null.
@@ -37,7 +41,10 @@ namespace CSharp
         /// <returns></returns>
         public static string SafeTruncate(string input, int length)
         {
-            return null;
+            if (input == null)
+                return null;
+
+            return new string(input.Take(length).ToArray());
         }
 
         /// <summary>
@@ -47,7 +54,20 @@ namespace CSharp
         /// <returns></returns>
         public static List<int> EvenNumerics(List<string> input)
         {
-            return null;
+            var evenNumbers = FindNumbers(input).Where(x => x % 2 ==0).ToList();
+
+            return evenNumbers;
         }
+
+        private static IEnumerable<int> FindNumbers(List<string> input)
+        {
+            foreach (var item in input)
+            {
+                if(int.TryParse(item, out int result)) { 
+                    yield return result;
+                }            
+            }
+        }
+ 
     }
 }
